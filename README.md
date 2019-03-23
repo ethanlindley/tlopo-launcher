@@ -1,6 +1,6 @@
 # launcher
 
-Simple game launcher for _The Legend of Pirates Online,_ a recreation of one of Disney's MMORPGs, _Pirates of the Caribbean Online._ Offers two-step authentication, with asset patching soon.
+Simple game launcher for _The Legend of Pirates Online,_ a recreation of one of Disney's now-defunct MMORPGs, _Pirates of the Caribbean Online._ The application currently supports two-step authentication, with asset patching soon.
 
 ## Getting Started
 
