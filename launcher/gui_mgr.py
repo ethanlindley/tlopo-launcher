@@ -33,7 +33,7 @@ class GuiManager(object):
     def prepareWindow(self):
         # create the background
         cm = CardMaker('background')
-        img = loader.loadTexture('etc/resources/bg.jpg')
+        img = loader.loadTexture('etc/resources/images/bg.jpg')
         card = render2d.attachNewNode(cm.generate())
         card.setTransparency(TransparencyAttrib.MAlpha)
         card.setTexture(img)
@@ -82,8 +82,8 @@ class GuiManager(object):
             pos=(0.035, 0, -0.391),
             scale=0.09,
             command=self.prepareLogin,
-            rolloverSound=loader.loadSfx('etc/resources/btn_rollover.wav'),
-            clickSound=loader.loadSfx('etc/resources/btn_click.wav')
+            rolloverSound=loader.loadSfx('etc/resources/audio/btn_rollover.wav'),
+            clickSound=loader.loadSfx('etc/resources/audio/btn_click.wav')
         )
         self.objects['play_btn'] = play_btn
 
@@ -119,8 +119,8 @@ class GuiManager(object):
             pos=(0.691, 0, 0.45),
             scale=0.08,
             command=self.prepareLogin,
-            rolloverSound=loader.loadSfx('etc/resources/btn_rollover.wav'),
-            clickSound=loader.loadSfx('etc/resources/btn_click.wav')
+            rolloverSound=loader.loadSfx('etc/resources/audio/btn_rollover.wav'),
+            clickSound=loader.loadSfx('etc/resources/audio/btn_click.wav')
         )
         self.objects['2fa_btn'] = btn
 
