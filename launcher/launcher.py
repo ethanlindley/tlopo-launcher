@@ -21,13 +21,13 @@ class Launcher(ShowBase):
         # begin building the frontend client application
         self.setup()
 
-    def setup(self):
+    def setup(self) -> None:
         # setup our GUI
         self.gmgr.build()
         
         base.accept('tab', self.gmgr.cycleEntry)
 
-    def beginLogin(self):
+    def beginLogin(self) -> None:
         # let's grab our login information from the GUI manager
         uname = self.gmgr.getUname()
         pword = self.gmgr.getPword()

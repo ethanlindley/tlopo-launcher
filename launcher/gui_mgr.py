@@ -18,19 +18,19 @@ class GuiManager(object):
         self._pword = ''
         self._gtoken = ''
 
-    def getUname(self):
+    def getUname(self) -> str:
         return self._uname
 
-    def getPword(self):
+    def getPword(self) -> str:
         return self._pword
 
-    def getGtoken(self):
+    def getGtoken(self) -> str:
         return self._gtoken
 
-    def build(self):
+    def build(self) -> None:
         self.prepareWindow()
 
-    def prepareWindow(self):
+    def prepareWindow(self) -> None:
         # create the background
         cm = CardMaker('background')
         img = loader.loadTexture('etc/resources/images/bg.jpg')
@@ -124,7 +124,7 @@ class GuiManager(object):
         )
         self.objects['2fa_btn'] = btn
 
-    def prepareLogin(self):
+    def prepareLogin(self) -> None:
         if self.objects['uname_entry'].get() != '':
             self._uname = self.objects['uname_entry'].get()
         if self.objects['pword_entry'].get() != '':
@@ -137,7 +137,7 @@ class GuiManager(object):
             pass
         self.parent.beginLogin()
 
-    def cleanup2fa(self):
+    def cleanup2fa(self) -> None:
         # cleanup 2fa prompt
         self.objects['2fa_text'].destroy()
         self.objects['2fa_entry'].destroy()
@@ -147,10 +147,10 @@ class GuiManager(object):
         self.objects.pop('2fa_entry')
         self.objects.pop('2fa_btn')
 
-    def updateStatus(self, response):
+    def updateStatus(self, response: str) -> None:
         self.objects['status_text'].setText(response)
 
-    def cycleEntry(self):
+    def cycleEntry(self) -> None:
         uname_entry = self.objects['uname_entry']
         pword_entry = self.objects['pword_entry']
 
