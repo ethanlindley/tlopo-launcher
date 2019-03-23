@@ -1,4 +1,4 @@
-from launcher.gui.launcher import Launcher
+from launcher.launcher import Launcher
 
 try:
     app = Launcher()

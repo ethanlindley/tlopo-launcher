@@ -1,7 +1,6 @@
 from panda3d.core import *
 from direct.showbase.Loader import *
 from direct.gui.DirectGui import *
-import time
 
 
 class GuiManager(object):
@@ -14,9 +13,19 @@ class GuiManager(object):
         # keep track of objects we have instantiated that we might need to use later
         self.objects = dict()
         
+        # so that we can save the values without having them overwritten
         self._uname = ''
         self._pword = ''
         self._gtoken = ''
+
+    def getUname(self):
+        return self._uname
+
+    def getPword(self):
+        return self._pword
+
+    def getGtoken(self):
+        return self._gtoken
 
     def build(self):
         self.prepareWindow()
@@ -120,15 +129,14 @@ class GuiManager(object):
         if self.objects['pword_entry'].get() != '':
             self._pword = self.objects['pword_entry'].get()
         try:
+            # if the user is 2fa, let's get their gtoken
             if self.objects['2fa_entry'].get() != '':
                 self._gtoken = self.objects['2fa_entry'].get()
         except:
             pass
-        self.parent.beginLogin(self._uname, self._pword, self._gtoken)
+        self.parent.beginLogin()
 
     def cleanup2fa(self):
-        # ensure the program receives the 2fa input
-        time.sleep(0.1)
         # cleanup 2fa prompt
         self.objects['2fa_text'].destroy()
         self.objects['2fa_entry'].destroy()
@@ -139,7 +147,6 @@ class GuiManager(object):
         self.objects.pop('2fa_btn')
 
     def updateStatus(self, response):
-        print(response)
         self.objects['status_text'].setText(response)
 
     def cycleEntry(self):

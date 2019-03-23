@@ -1,0 +1,58 @@
+from panda3d.core import *
+from direct.showbase.ShowBase import ShowBase
+
+from launcher import globals
+from launcher.gui_mgr import GuiManager
+from launcher.core import Core
+
+# load our configuration file
+loadPrcFile('etc/config.prc')
+
+
+class Launcher(ShowBase):
+    
+    def __init__(self):
+        ShowBase.__init__(self)
+
+        # instantiate some of our core classes -- we'll need to access these throughout the program
+        self.gmgr = GuiManager(self)  # responsible for building the frontend objects
+        self.core = Core(self)  # responsible for handling backend API tasks
+
+        # begin building the frontend client application
+        self.setup()
+
+    def setup(self):
+        # setup our GUI
+        self.gmgr.build()
+        
+        base.accept('tab', self.gmgr.cycleEntry)
+
+    def beginLogin(self):
+        uname = self.gmgr.getUname()
+        pword = self.gmgr.getPword()
+        gtoken = self.gmgr.getGtoken()
+
+        # first, some basic sanity checking
+        if uname == '':
+            if pword == '':
+                self.gmgr.updateStatus('ERROR: {}'.format(globals.responses[12].lower()))
+            else:
+                self.gmgr.updateStatus('ERROR: {}'.format(globals.responses[13].lower()))
+        elif uname != '' and pword == '':
+            self.gmgr.updateStatus('ERROR: {}'.format(globals.responses[14].lower()))
+        else:
+            # finally, we've passed all the tests and can begin authenticating with the API
+            self.gmgr.updateStatus('Attempting to login...')
+
+            if gtoken != '':
+                # are we trying to perform 2fa authentication?
+                message, logged_in = self.core.handleLogin2fa(uname, pword, gtoken)
+            else:
+                message, logged_in = self.core.handleLogin(uname, pword)
+
+            # let's update the client and inform the user of whether they're successfully logged in or not
+            if logged_in is False:
+                self.gmgr.updateStatus('ERROR: {}'.format(message.lower()))
+            elif logged_in is True:
+                self.gmgr.updateStatus('{}'.format(message))
+                # TODO - check for new updates and patch assets accordingly
