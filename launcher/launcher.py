@@ -35,11 +35,11 @@ class Launcher(ShowBase):
         # first, some basic sanity checking
         if uname == '':
             if pword == '':
-                self.gmgr.updateStatus('ERROR: {}'.format(globals.responses[12].lower()))
+                self.gmgr.updateStatus('{}'.format(globals.responses[12]))
             else:
-                self.gmgr.updateStatus('ERROR: {}'.format(globals.responses[13].lower()))
+                self.gmgr.updateStatus('{}'.format(globals.responses[13]))
         elif uname != '' and pword == '':
-            self.gmgr.updateStatus('ERROR: {}'.format(globals.responses[14].lower()))
+            self.gmgr.updateStatus('{}'.format(globals.responses[14]))
         else:
             # finally, we've passed all the tests and can begin authenticating with the API
             self.gmgr.updateStatus('Attempting to login...')
@@ -52,7 +52,7 @@ class Launcher(ShowBase):
 
             # let's update the client and inform the user of whether they're successfully logged in or not
             if logged_in is False:
-                self.gmgr.updateStatus('ERROR: {}'.format(message.lower()))
+                self.gmgr.updateStatus('{}'.format(message))
             elif logged_in is True:
                 self.gmgr.updateStatus('{}'.format(message))
                 # TODO - check for new updates and patch assets accordingly

@@ -91,7 +91,8 @@ class GuiManager(object):
             text='',
             pos=(0.065, 0.21),
             scale=0.08,
-            fg=(255, 255, 255, 255)
+            fg=(255, 255, 255, 255),
+            align=TextNode.ACenter
         )
         self.objects['status_text'] = status_text
 
