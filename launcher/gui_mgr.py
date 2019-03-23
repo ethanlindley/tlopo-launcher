@@ -10,10 +10,10 @@ class GuiManager(object):
 
         base.setBackgroundColor(255, 255, 255, 255)
 
-        # keep track of objects we have instantiated that we might need to use later
+        # keep track of GUI objects we have instantiated that we might need to access later
         self.objects = dict()
         
-        # so that we can save the values without having them overwritten
+        # store the user's values without having them overwritten
         self._uname = ''
         self._pword = ''
         self._gtoken = ''
@@ -154,9 +154,12 @@ class GuiManager(object):
         uname_entry = self.objects['uname_entry']
         pword_entry = self.objects['pword_entry']
 
+        # if the username entry field is not "selected"
         if uname_entry['focus'] == 0:
+            # put the username entry field in focus and the password entry field out of focus
             uname_entry['focus'] = 1
             pword_entry['focus'] = 0
+        # if the password entry field is not "selected"
         elif pword_entry['focus'] == 0:
             pword_entry['focus'] = 1
             uname_entry['focus'] = 0

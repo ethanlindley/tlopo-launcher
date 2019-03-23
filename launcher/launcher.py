@@ -28,6 +28,7 @@ class Launcher(ShowBase):
         base.accept('tab', self.gmgr.cycleEntry)
 
     def beginLogin(self):
+        # let's grab our login information from the GUI manager
         uname = self.gmgr.getUname()
         pword = self.gmgr.getPword()
         gtoken = self.gmgr.getGtoken()

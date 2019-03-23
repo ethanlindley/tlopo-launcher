@@ -1,4 +1,4 @@
-window-title TLoPO Launcher - Ethan Lindley
+window-title TLoPO Launcher - https://github.com/ethanlindley
 win-size 800 500
 win-fixed-size True
 undecorated False

@@ -39,6 +39,7 @@ class Core(object):
         elif status == 7:
             # huzzah! we've made it through :D
             try:
+                # if we needed the user's gtoken, let's cleanup that prompt
                 self.launcher.gmgr.cleanup2fa()
                 return message, True
             except Exception as e:
