@@ -5,5 +5,5 @@ Simple game launcher for _The Legend of Pirates Online,_ a recreation of one of 
 ## Getting Started
 
 * `brew install python3`
-* `pip3 install panda3d==1.10.2`
+* `pip3 install panda3d==1.10.2 requests`
 * `python3 main.py`
