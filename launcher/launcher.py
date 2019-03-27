@@ -56,4 +56,5 @@ class Launcher(ShowBase):
                 self.gmgr.updateStatus('{}'.format(message))
             elif logged_in is True:
                 self.gmgr.updateStatus('{}'.format(message))
-                # TODO - check for new updates and patch assets accordingly
+                # TODO - now that we've logged in, let's start the client, assuming that the user's assets are up-to-date
+                # side note - TLoPO, pls develop a public DL server API :|

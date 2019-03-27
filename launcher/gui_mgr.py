@@ -96,6 +96,13 @@ class GuiManager(object):
         )
         self.objects['status_text'] = status_text
 
+        version = OnscreenText(
+            text=ConfigVariableString('launcher-version').getValue(),
+            pos=(-1.4, 0.55),
+            scale=0.08,
+            fg=(255, 255, 255, 255)
+        )
+
     def prompt2fa(self):
         # we need the user's 2fa token in order to login -- let's kindly ask them for it :)
         text = OnscreenText(
