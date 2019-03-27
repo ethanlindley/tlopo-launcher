@@ -47,5 +47,5 @@ class Core(object):
                 # 2fa wasn't needed in this case
                 return message, True
         else:
-            # we don't handle any other case outside of the above conditionals
+            # any other case results in an error/status message
             return message, False
