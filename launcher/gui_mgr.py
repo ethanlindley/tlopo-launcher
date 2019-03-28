@@ -10,6 +10,9 @@ class GuiManager(object):
 
         base.setBackgroundColor(255, 255, 255, 255)
 
+        base.accept('tab', self.cycleEntry)
+        base.accept('enter', self.prepareLogin)
+
         # keep track of GUI objects we have instantiated that we might need to access later
         self.objects = dict()
         
@@ -39,6 +42,7 @@ class GuiManager(object):
         card.setTexture(img)
         card.setPos(-1, 0, -1)
         card.setScale(2)
+        self.objects['background'] = card
 
         # create our login objects
         uname_text = OnscreenText(
@@ -102,6 +106,7 @@ class GuiManager(object):
             scale=0.08,
             fg=(255, 255, 255, 255)
         )
+        self.objects['version'] = version
 
     def prompt2fa(self):
         # we need the user's 2fa token in order to login -- let's kindly ask them for it :)
@@ -120,6 +125,7 @@ class GuiManager(object):
             pos=(0.2895, 0, 0.65),
         )
         self.objects['2fa_entry'] = entry
+        entry['focus'] = 1  # put our 2fa prompt in focus
 
         btn = DirectButton(
             text='Submit',

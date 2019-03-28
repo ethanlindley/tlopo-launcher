@@ -1,5 +1,10 @@
-import requests 
+import os
+import requests
+import stat
+import subprocess
+import sys
 import urllib
+
 from typing import Tuple
 
 
@@ -25,27 +30,48 @@ class Core(object):
         r = requests.post('https://api.tlopo.com/login/', data=params, headers=headers).json()
         return self.handleLoginResponse(r)
 
-    def handleLoginResponse(self, resp: dict, uname: str='', pword: str='', gtoken: str='') -> Tuple[str, bool]:
+    def handleLoginResponse(self, resp: dict, uname: str='', pword: str='', gtoken: str='') -> Tuple[str, bool, str, str]:
         # let's see what the API has to say about the data we've fed it...
         status = resp['status']
         message = resp['message']
+        gameserver = resp['gameserver']
+        token = resp['token']
 
-        if status == 3:
-            # looks like we need to perform some two-step authentication first -- let's get the user's gtoken
-            self.launcher.gmgr.prompt2fa()
-            return message, False
-        elif status == 1 or status == 4 or status == 5 or status == 8 or status == 9 or status == 10 or status == 11:
-            # unable to connect :(
-            return message, False
-        elif status == 7:
+        if status == 7:
             # huzzah! we've made it through :D
             try:
                 # if we needed the user's gtoken, let's cleanup that prompt
                 self.launcher.gmgr.cleanup2fa()
-                return message, True
+                return message, True, gameserver, token
             except Exception as e:
                 # 2fa wasn't needed in this case
-                return message, True
+                return message, True, gameserver, token
+        elif status == 3:
+            # looks like we need to perform some two-step authentication first -- let's get the user's gtoken
+            self.launcher.gmgr.prompt2fa()
+            return message, False, '', ''
+        elif status == 1 or status == 4 or status == 5 or status == 8 or status == 9 or status == 10 or status == 11:
+            # unable to connect :(
+            return message, False, '', ''
         else:
             # any other case results in an error/status message
-            return message, False
+            return message, False, '', ''
+
+    def launchProcess(self, gameserver: str, token: str) -> None:
+        os.environ['TLOPO_GAMESERVER'] = gameserver
+        os.environ['TLOPO_PLAYCOOKIE'] = token
+
+        if sys.platform == 'linux' or sys.platform == 'linux2':
+            # TODO - implement support for Linux-based systems
+            pass
+        elif sys.platform == 'darwin':
+            # check if the shell script has proper permissions or not
+            st = os.stat('./darwin/launch_client.sh')
+            # checking for group execute permission
+            if bool(st.st_mode & stat.S_IRWXU) is False:
+                subprocess.run('chmod +x ./darwin/launch_client.sh')
+            # execute the shell script
+            subprocess.call('./darwin/launch_client.sh')
+        elif sys.platform == 'win32':
+            # TODO - implement support for Windows systems
+            pass

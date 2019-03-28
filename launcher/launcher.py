@@ -1,3 +1,6 @@
+import time
+import sys
+
 from panda3d.core import *
 from direct.showbase.ShowBase import ShowBase
 
@@ -24,8 +27,6 @@ class Launcher(ShowBase):
     def setup(self) -> None:
         # setup our GUI
         self.gmgr.build()
-        
-        base.accept('tab', self.gmgr.cycleEntry)
 
     def beginLogin(self) -> None:
         # let's grab our login information from the GUI manager
@@ -47,14 +48,21 @@ class Launcher(ShowBase):
 
             if gtoken != '':
                 # are we trying to perform 2fa authentication?
-                message, logged_in = self.core.handleLogin2fa(uname, pword, gtoken)
+                message, logged_in, gameserver, token = self.core.handleLogin2fa(uname, pword, gtoken)
             else:
-                message, logged_in = self.core.handleLogin(uname, pword)
+                message, logged_in, gameserver, token = self.core.handleLogin(uname, pword)
 
             # let's update the client and inform the user of whether they're successfully logged in or not
             if logged_in is False:
                 self.gmgr.updateStatus('{}'.format(message))
-            elif logged_in is True:
+            else:
                 self.gmgr.updateStatus('{}'.format(message))
-                # TODO - now that we've logged in, let's start the client, assuming that the user's assets are up-to-date
+                # now that we've logged in, let's start the client, assuming that the user's assets are up-to-date
                 # side note - TLoPO, pls develop a public DL server API :|
+            
+                # destroy GUI
+                base.destroy()
+                # give the computer a second to prepare for client startup
+                time.sleep(1)
+                # finally, we can start the client :)
+                self.core.launchProcess(gameserver, token)
