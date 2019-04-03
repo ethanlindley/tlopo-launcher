@@ -34,14 +34,16 @@ class Core(object):
         # let's see what the API has to say about the data we've fed it...
         status = resp['status']
         message = resp['message']
-        gameserver = resp['gameserver']
-        token = resp['token']
 
         if status == 7:
             # huzzah! we've made it through :D
             try:
                 # if we needed the user's gtoken, let's cleanup that prompt
                 self.launcher.gmgr.cleanup2fa()
+
+                gameserver = resp['gameserver']
+                token = resp['token']
+
                 return message, True, gameserver, token
             except Exception as e:
                 # 2fa wasn't needed in this case
