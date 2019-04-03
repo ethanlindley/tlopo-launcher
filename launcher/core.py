@@ -75,4 +75,4 @@ class Core(object):
             # execute the shell script
             subprocess.call('./darwin/launch_client.sh')
         elif sys.platform == 'win32':
-            subprocess.call([r'./win32/launch_client.bat'])
+            subprocess.call([r'.\win32\launch_client.bat'])
