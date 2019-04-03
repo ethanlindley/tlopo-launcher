@@ -37,12 +37,12 @@ class Core(object):
 
         if status == 7:
             # huzzah! we've made it through :D
+            # let's grab the gameserver and playtoken for the playing session
+            gameserver = resp['gameserver']
+            token = resp['token']
             try:
                 # if we needed the user's gtoken, let's cleanup that prompt
                 self.launcher.gmgr.cleanup2fa()
-
-                gameserver = resp['gameserver']
-                token = resp['token']
 
                 return message, True, gameserver, token
             except Exception as e:
@@ -75,5 +75,4 @@ class Core(object):
             # execute the shell script
             subprocess.call('./darwin/launch_client.sh')
         elif sys.platform == 'win32':
-            # TODO - implement support for Windows systems
-            pass
+            subprocess.call([r'./win32/launch_client.bat'])
