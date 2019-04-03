@@ -12,10 +12,16 @@ echo (ex: D:\TLOPO\)
 echo ====================================================
 echo.
 
+REM Get the user's input...
 SET /P TLOPO_INSTALL_DIR="Full TLoPO installation location: "
+REM In case they don't supply a value
 IF NOT DEFINED TLOPO_INSTALL_DIR SET TLOPO_INSTALL_DIR=C:\Program Files (x86)\TLOPO\
 
+REM Change directories (and drives, if necessary) to the install location
 cd /D %TLOPO_INSTALL_DIR%
 
-start tlopo.exe
-exit
+REM Clear the command prompt
+cls
+
+REM Execute the program and exit the command prompt upon program termination
+cmd /c "" tlopo.exe && exit

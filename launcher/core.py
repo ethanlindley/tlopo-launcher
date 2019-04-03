@@ -74,5 +74,8 @@ class Core(object):
                 subprocess.run('chmod +x ./darwin/launch_client.sh')
             # execute the shell script
             subprocess.call('./darwin/launch_client.sh')
+            sys.exit(0)
         elif sys.platform == 'win32':
+            # execute the batch script
             subprocess.call([r'.\win32\launch_client.bat'])
+            sys.exit(0)
